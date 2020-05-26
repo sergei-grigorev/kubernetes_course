@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: init-gridu-deployment
+  labels:
+    app: gridu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gridu
+  template:
+    metadata:
+      labels:
+        app: gridu
+    spec:
+      containers:
+      - name: gridu
+        image: quay.io/myafk/interactive:stable
+        command: ["interactive", "config", "-t=first"]
+        env:
+        - name: GRIDU_CONFIGMAP_ENV
+          valueFrom: 
+            configMapKeyRef:
+              name: griduconfig-map
+              key: GRIDU_CONFIGMAP_ENV

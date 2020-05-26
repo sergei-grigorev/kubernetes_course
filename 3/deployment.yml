@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: interactive-app-depl
+  labels:
+    app: gridu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: interactive-app
+  template:
+    metadata:
+      labels:
+        app: interactive-app
+    spec:
+      containers:
+      - name: gridu
+        image: quay.io/myafk/interactive:stable
+        command: ["interactive", "ingress"]
+        ports:
+          - containerPort: 8085

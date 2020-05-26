@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: init-gridu-deployment-3
+  labels:
+    app: gridu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gridu
+  template:
+    metadata:
+      labels:
+        app: gridu
+    spec:
+      containers:
+      - name: gridu
+        image: quay.io/myafk/interactive:stable
+        command: ["interactive", "config", "-t=third"]
+        env:
+        - name: GRIDU_SECRET_ENV
+          valueFrom: 
+            secretKeyRef:
+              name: gridu-secret
+              key: GRIDU_SECRET_ENV

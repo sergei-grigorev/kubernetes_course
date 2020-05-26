@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: init-gridu-deployment-2
+  labels:
+    app: gridu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gridu-2
+  template:
+    metadata:
+      labels:
+        app: gridu-2
+    spec:
+      containers:
+      - name: gridu
+        image: quay.io/myafk/interactive:stable
+        command: ["interactive", "config", "-t=second"]
+        volumeMounts:
+          - name: config
+            mountPath: /mnt
+      volumes:
+        - name: config
+          configMap:
+            name: griduconfig-map

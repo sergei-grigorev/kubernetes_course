@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: workloads-service
+  labels:
+    app: workloads
+spec:
+  clusterIP: None
+  selector:
+    app: workloads
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: workloads-ss
+spec:
+  selector:
+    matchLabels:
+      app: workloads
+  serviceName: workloads
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: workloads
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: workloads
+        image: quay.io/myafk/interactive:stable
+        command: ["interactive", "workloads", "-t=first"]
+        env:
+        - name: serviceName
+          value: workloads-service

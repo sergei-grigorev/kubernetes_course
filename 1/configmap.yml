@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  GRIDU_CONFIGMAP_ENV: KUBERNETES_IS_VERY_FUN
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: griduconfig-map

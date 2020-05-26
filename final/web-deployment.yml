@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        image: quay.io/myafk/interactive:stable
+        command: ["interactive", "ingress"]
+        env:
+        - name: REDIS_SLAVE_HOST
+          value: redis-slave
+        - name: REDIS_MASTER_HOST
+          value: redis-master
+        - name: REDIS_MASTER_HOST
+          value: redis-master
+        - name: KUBERNETES_SERVICE_HOST
+          value: "localhost"
+        - name: KUBERNETES_SERVICE_PORT
+          value: "33333"
+        - name: ELASTICSEARCH_HOSTS
+          value: http://elasticsearch:9200
+        ports:
+        - containerPort: 8085
